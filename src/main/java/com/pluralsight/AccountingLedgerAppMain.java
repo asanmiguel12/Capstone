@@ -63,7 +63,7 @@ public class AccountingLedgerAppMain {
                 viewLedger();
                 break;
             case "D":
-                makeDeposit();
+                viewDeposits();
                 break;
             case "P":
                 makePayment();
@@ -84,13 +84,11 @@ public class AccountingLedgerAppMain {
             Scanner scanner = new Scanner(transactions);
 
             String input = scanner.nextLine();
-            int lineCount = 0;
 
             while (scanner.hasNextLine()) {
                 input = scanner.nextLine();
                 List<String> ledger = List.of(input);
                 for (int i = 0; i < ledger.size(); i++) {
-                    lineCount++;
                     System.out.println(ledger.get(i));
                 }
             }
@@ -135,7 +133,6 @@ public class AccountingLedgerAppMain {
 
             UserLedgers paymentLedger = new UserLedgers(deposit, description, vendor, LocalTime.now(), LocalDate.now());
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + deposit;
-            String LocalDateTime;
             System.out.println("Your deposit of " + deposit + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
@@ -166,7 +163,6 @@ public class AccountingLedgerAppMain {
 
             UserLedgers paymentLedger = new UserLedgers(payment, description, vendor, LocalTime.now(), LocalDate.now());
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + "-" + payment;
-            String LocalDateTime;
             System.out.println("Your payment of " + payment + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
@@ -178,10 +174,35 @@ public class AccountingLedgerAppMain {
         }
     }
 
-    public void displayMenu() {
-        homeScreen();
-    }
+    public void viewDeposits() {
+        try {
+            System.out.println("Here are all of your current deposits as of " + LocalDate.now() + "\n");
 
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+
+                //for (int i = 0; i < arrTransactions.length; i++) {
+                UserLedgers f = new UserLedgers(deposit, description, vendor, LocalTime.now(), LocalDate.now());
+                if (f.getAmountChanged() > 0) {
+                    System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+
+
+                }
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Incorrect Input");
+            e.printStackTrace();
+        }
+    }
     public void exit(){
         System.out.println("Thank you for using our app" +
                 "\nHave a good day!");
