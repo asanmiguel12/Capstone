@@ -1,84 +1,37 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class UserLedgers {
-    String entries;
-    Double deposits;
-    Double payments;
-    String reports;
-    String date;
-    String time;
+    LocalDate date;
+    LocalTime time;
     String vendor;
     String itemDescription;
     Double amountChanged;
 
-
-     public UserLedgers(String date, String time, String itemDescription, String vendor, Double amountChanged) {
-        this.date = date;
-        this.time = time;
+    public UserLedgers(Double amountChanged, String itemDescription, String vendor, LocalTime time, LocalDate date) {
+        this.amountChanged = amountChanged;
         this.itemDescription = itemDescription;
         this.vendor = vendor;
-        this.amountChanged = amountChanged;
-
-
-
-    }
-
-    public String getEntries() {
-        return entries;
-    }
-
-    public void setEntries(String entries) {
-        this.entries = entries;
-    }
-
-    public Double getDeposits() {
-        return deposits;
-    }
-
-    public void setDeposits(Double deposits) {
-        this.deposits = deposits;
-    }
-
-    public Double getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Double payments) {
-        this.payments = payments;
-    }
-
-    public String getReports() {
-        return reports;
-    }
-
-    public void setReports(String reports) {
-        this.reports = reports;
+        this.time = time;
+        this.date = date;
     }
 
     public String getDate() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = now.format(date);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = date.format(dtf);
         return formattedDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getTime() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String formattedTime = now.format(time);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = time.format(dtf);
         return formattedTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getVendor() {
         return vendor;
