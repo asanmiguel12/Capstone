@@ -489,7 +489,7 @@ public class AccountingLedgerAppMain {
     public void exit() {
         System.out.println("User Entry Logged Out At: " + LocalDateTime.now());
         System.out.println("\nThank You For Using Our Account Ledger Application!" +
-                "\nHave A Great Day!");
+                "\nHave A Nice Day!");
 
     }
 }
