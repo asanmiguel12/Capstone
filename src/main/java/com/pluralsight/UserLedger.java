@@ -1,18 +1,17 @@
 package com.pluralsight;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class UserLedgers {
+public class UserLedger {
     LocalDate date;
     LocalTime time;
     String vendor;
     String itemDescription;
     Double amountChanged;
 
-    public UserLedgers(String date, String time, String itemDescription, String vendor, Double amountChanged) {
+    public UserLedger(String date, String time, String itemDescription, String vendor, Double amountChanged) {
         this.amountChanged = amountChanged;
         this.itemDescription = itemDescription;
         this.vendor = vendor;

@@ -145,7 +145,7 @@ public class AccountingLedgerAppMain {
             System.out.println("Please enter the vendor name for the deposit: ");
             String vendor = scanner.nextLine();
 
-            UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, deposit);
+            UserLedger paymentLedger = new UserLedger(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, deposit);
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + deposit;
             System.out.println("Processing information...");
             Thread.sleep(2000);
@@ -178,7 +178,7 @@ public class AccountingLedgerAppMain {
             System.out.println("Please enter the vendor name for the payment: ");
             String vendor = scanner.nextLine();
 
-            UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, payment);
+            UserLedger paymentLedger = new UserLedger(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, payment);
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + payment;
             System.out.println("Processing information...");
             Thread.sleep(2000);
@@ -207,7 +207,7 @@ public class AccountingLedgerAppMain {
             String input = bufReader.readLine();
             while ((input = bufReader.readLine()) != null) {
                 String[] arrTransactions = input.split("\\|");
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
@@ -239,7 +239,7 @@ public class AccountingLedgerAppMain {
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
                 //for (int i = 0; i < arrTransactions.length; i++) {
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
                 if (f.getAmountChanged() < 0) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
@@ -317,7 +317,7 @@ public class AccountingLedgerAppMain {
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 double now = LocalDate.now().getMonthValue();
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
@@ -350,7 +350,7 @@ public class AccountingLedgerAppMain {
             String input = bufReader.readLine();
             while ((input = bufReader.readLine()) != null) {
                 String[] arrTransactions = input.split("\\|");
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 String findName = arrTransactions[3];
                 if (vendorName.equalsIgnoreCase(findName)) {
                     System.out.println("\nTransactions found under " + vendorName + ":\n");
@@ -383,7 +383,7 @@ public class AccountingLedgerAppMain {
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 double now = LocalDate.now().getMonthValue() - 1;
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
@@ -418,7 +418,7 @@ public class AccountingLedgerAppMain {
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 double now = LocalDate.now().getYear();
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionYear = Double.parseDouble(getTransactionMonth[0]);
@@ -452,7 +452,7 @@ public class AccountingLedgerAppMain {
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
-                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 double now = LocalDate.now().getYear() - 1;
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionYear = Double.parseDouble(getTransactionMonth[0]);
