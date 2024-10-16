@@ -48,7 +48,7 @@ public class AccountingLedgerAppMain {
     public void ledgerMenu(){
         getUser();
         System.out.println("~LEDGER OPTIONS~");
-        System.out.println("\nWhat would you like to do with your ledger today? Please enter command for desired option: \n\n" +
+        System.out.println("What would you like to do with your ledger today? Please enter command for desired option: \n\n" +
                 "A) All - Display all entries\n" +
                 "D) Deposits - Display all deposits\n" +
                 "P) Payments - Display all payments\n" +
@@ -78,8 +78,8 @@ public class AccountingLedgerAppMain {
 
     public void viewLedger() {
         try {
-            System.out.println("~CURRENT UP TO DATE LEDGER~");
-            System.out.println("\nHere is your current account ledger as of: " + LocalDate.now() + "\n");
+            System.out.println("\n~CURRENT UP TO DATE LEDGER~");
+            System.out.println("Here is your current account ledger as of: " + LocalDate.now() + "\n");
             FileInputStream transactions = new FileInputStream("transactions2.csv");
             Scanner scanner = new Scanner(transactions);
 
@@ -102,22 +102,27 @@ public class AccountingLedgerAppMain {
     }
 
     public void getUser() {
-        System.out.println("~NAME ENTRY LOGIN~");
-        System.out.println("\nPlease enter your name: ");
+        System.out.println("\n~USER LOGIN~");
+        System.out.println("Please enter your name: ");
         String name = scanner.nextLine();
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter);
 
-        System.out.println("\nHello " + name + "\n" + "User Entry Logged At: " + formattedDateTime +"\n");
 
+        System.out.println("\n\n\n\n\nHello " + name + "\nUser Entry Logged At: " + formattedDateTime +"\n\n\n\n\n");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void makeDeposit() {
         try {
             getUser();
-            System.out.println("~NEW DEPOSIT~");
+            System.out.println("\n~NEW DEPOSIT~");
 
             FileWriter fileWriter = new FileWriter("transactions2.csv", true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -148,7 +153,7 @@ public class AccountingLedgerAppMain {
     public void makePayment() {
         try {
             getUser();
-            System.out.println("~NEW PAYMENT~");
+            System.out.println("\n~NEW PAYMENT~");
 
             FileWriter fileWriter = new FileWriter("transactions2.csv",true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -179,8 +184,8 @@ public class AccountingLedgerAppMain {
 
     public void viewDeposits() {
         try {
-            System.out.println("~DEPOSIT REPORTS~");
-            System.out.println("\nHere are all of your current deposit transactions as of " + LocalDate.now() + "\n");
+            System.out.println("\n~DEPOSIT REPORTS~");
+            System.out.println("Here are all of your current deposit transactions as of " + LocalDate.now() + "\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -205,8 +210,8 @@ public class AccountingLedgerAppMain {
     }
     public void viewPayments() {
         try {
-            System.out.println("~PAYMENT REPORT");
-            System.out.println("\nHere are all of your current payment transactions as of " + LocalDate.now() + "\n");
+            System.out.println("\n~PAYMENT REPORT");
+            System.out.println("Here are all of your current payment transactions as of " + LocalDate.now() + "\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -235,7 +240,7 @@ public class AccountingLedgerAppMain {
     }
     public void reportsMenu() {
         try {
-            System.out.println("~LEDGER REPORTS~");
+            System.out.println("\n~LEDGER REPORTS~");
             System.out.println("Which report would you like to view? Please enter command corresponding to your desired type of report:\n\n" +
                     "1) Month to Date\n" +
                     "2) Previous Month\n" +
@@ -276,8 +281,8 @@ public class AccountingLedgerAppMain {
 
     public void mtdReport() {
         try {
-            System.out.println("~MONTH TO DATE REPORT~");
-            System.out.println("\nHere are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
+            System.out.println("\n~MONTH TO DATE REPORT~");
+            System.out.println("Here are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -308,8 +313,8 @@ public class AccountingLedgerAppMain {
     }
     public void vendorReport() {
         try {
-            System.out.println("~SEARCH BY VENDOR REPORT~");
-            System.out.println("\nEnter the vendor name of the transactions you would like to view: ");
+            System.out.println("\n~SEARCH BY VENDOR REPORT~");
+            System.out.println("Enter the vendor name of the transactions you would like to view: ");
 
             String vendorName = scanner.nextLine();
 
@@ -336,8 +341,8 @@ public class AccountingLedgerAppMain {
     }
     public void previousMonthReport() {
         try {
-            System.out.println("~PREVIOUS MONTH REPORT~");
-            System.out.println("\nHere are all of your last month's' transactions as of " + LocalDate.now() + ":\n");
+            System.out.println("\n~PREVIOUS MONTH REPORT~");
+            System.out.println("Here are all of your last month's' transactions as of " + LocalDate.now() + ":\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -369,7 +374,7 @@ public class AccountingLedgerAppMain {
     }
     public void yearToDateReport() {
         try {
-            System.out.println("~YEAR TO DATE REPORT~");
+            System.out.println("\n~YEAR TO DATE REPORT~");
             System.out.println("\nHere are all of your current year to date transactions as of " + LocalDate.now() + ":\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
@@ -401,8 +406,8 @@ public class AccountingLedgerAppMain {
     }
     public void previousYearReport() {
         try {
-            System.out.println("~MONTH TO DATE REPORT~");
-            System.out.println("\nHere are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
+            System.out.println("\n~MONTH TO DATE REPORT~");
+            System.out.println("Here are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
