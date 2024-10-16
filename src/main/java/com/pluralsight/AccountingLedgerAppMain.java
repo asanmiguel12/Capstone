@@ -38,6 +38,9 @@ public class AccountingLedgerAppMain {
                 case "X":
                     exit();
                     break;
+                default:
+                    System.out.println("Invalid Input");
+                    homeScreen();
             }
         } catch (Exception e) {
             System.out.println("Input Error");
@@ -73,6 +76,9 @@ public class AccountingLedgerAppMain {
             case "H":
                 homeScreen();
                 break;
+            default:
+                System.out.println("Invalid Input");
+                ledgerMenu();
         }
     }
 
@@ -285,6 +291,9 @@ public class AccountingLedgerAppMain {
                 case "H":
                     homeScreen();
                     break;
+                default:
+                    System.out.println("Invalid Input");
+                    reportsMenu();
             }
         } catch (Exception e) {
             System.out.println("Invalid Input");
@@ -461,6 +470,7 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void returnHomeprompt() {
         System.out.println("\nWould you like to do something else with your ledger today?\n" +
                 "Y) Yes\n" +
