@@ -12,12 +12,12 @@ public class UserLedgers {
     String itemDescription;
     Double amountChanged;
 
-    public UserLedgers(Double amountChanged, String itemDescription, String vendor, LocalTime time, LocalDate date) {
+    public UserLedgers(String date, String time, String itemDescription, String vendor, Double amountChanged) {
         this.amountChanged = amountChanged;
         this.itemDescription = itemDescription;
         this.vendor = vendor;
-        this.time = time;
-        this.date = date;
+        this.time = LocalTime.parse(String.valueOf(LocalTime.now()));
+        this.date = LocalDate.parse(String.valueOf(date));
     }
 
     public String getDate() {

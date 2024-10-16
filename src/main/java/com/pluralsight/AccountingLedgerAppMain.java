@@ -1,13 +1,12 @@
 package com.pluralsight;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -18,7 +17,7 @@ public class AccountingLedgerAppMain {
     }
     public void homeScreen() {
         try {
-            System.out.println("\nWelcome To Your Account Ledger Application!\n\n" +
+            System.out.println("\n~WELCOME TO YOUR ACCOUNT LEDGER APPLICATION!~\n\n" +
                     "What would you like to do today? Please enter command for desired option:\n\n" +
                     "(L) View Ledger\n" +
                     "(D) Make Deposit\n" +
@@ -49,6 +48,7 @@ public class AccountingLedgerAppMain {
 
     public void ledgerMenu(){
         getUser();
+        System.out.println("~LEDGER OPTIONS~");
         System.out.println("\nWhat would you like to do with your ledger today? Please enter command for desired option: \n\n" +
                 "A) All - Display all entries\n" +
                 "D) Deposits - Display all deposits\n" +
@@ -66,10 +66,10 @@ public class AccountingLedgerAppMain {
                 viewDeposits();
                 break;
             case "P":
-                makePayment();
+                viewPayments();
                 break;
             case "R":
-                homeScreen();
+                reportsMenu();
                 break;
             case "H":
                 homeScreen();
@@ -79,8 +79,9 @@ public class AccountingLedgerAppMain {
 
     public void viewLedger() {
         try {
-            System.out.println("Here is your current account ledger as of: " + LocalDate.now() + "\n");
-            FileInputStream transactions = new FileInputStream("transactions.csv");
+            System.out.println("~CURRENT UP TO DATE LEDGER~");
+            System.out.println("\nHere is your current account ledger as of: " + LocalDate.now() + "\n");
+            FileInputStream transactions = new FileInputStream("transactions2.csv");
             Scanner scanner = new Scanner(transactions);
 
             String input = scanner.nextLine();
@@ -95,13 +96,13 @@ public class AccountingLedgerAppMain {
             scanner.close();
 
         } catch (IOException e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Invalid Input");
             throw new RuntimeException(e);
         }
     }
 
     public void getUser() {
-
+        System.out.println("~NAME ENTRY LOGIN~");
         System.out.println("\nPlease enter your name: ");
         String name = scanner.nextLine();
 
@@ -131,15 +132,15 @@ public class AccountingLedgerAppMain {
             System.out.println("Please enter the vendor name for the deposit: ");
             String vendor = scanner.nextLine();
 
-            UserLedgers paymentLedger = new UserLedgers(deposit, description, vendor, LocalTime.now(), LocalDate.now());
+            UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, deposit);
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + deposit;
-            System.out.println("Your deposit of " + deposit + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
+            System.out.println("Your deposit of " + deposit + " for item " + description + "by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Invalid Input");
             e.printStackTrace();
         }
     }
@@ -161,22 +162,49 @@ public class AccountingLedgerAppMain {
             System.out.println("Please enter the vendor name for the payment: ");
             String vendor = scanner.nextLine();
 
-            UserLedgers paymentLedger = new UserLedgers(payment, description, vendor, LocalTime.now(), LocalDate.now());
-            String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + "-" + payment;
+            UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, payment);
+            String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + payment;
             System.out.println("Your payment of " + payment + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
 
         } catch (IOException e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Invalid Input");
             e.printStackTrace();
         }
     }
 
     public void viewDeposits() {
         try {
-            System.out.println("Here are all of your current deposits as of " + LocalDate.now() + "\n");
+            System.out.println("~DEPOSIT REPORTS~");
+            System.out.println("\nHere are all of your current deposit transactions as of " + LocalDate.now() + "\n");
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+
+                if (f.getAmountChanged() > 0) {
+                    System.out.println(f.getDate() + "|" + f.getTime() + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+    public void viewPayments() {
+        try {
+            System.out.println("~PAYMENT REPORT");
+            System.out.println("\nHere are all of your current payment transactions as of " + LocalDate.now() + "\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -187,23 +215,120 @@ public class AccountingLedgerAppMain {
                 double deposit = Double.parseDouble(arrTransactions[4]);
                 String description = arrTransactions[2];
                 String vendor = arrTransactions[3];
-
                 //for (int i = 0; i < arrTransactions.length; i++) {
-                UserLedgers f = new UserLedgers(deposit, description, vendor, LocalTime.now(), LocalDate.now());
-                if (f.getAmountChanged() > 0) {
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
+                if (f.getAmountChanged() < 0) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-
-
                 }
             }
 
-
         } catch (Exception e) {
-            System.out.println("Incorrect Input");
+            System.out.println("Invalid Input");
             e.printStackTrace();
         }
     }
-    public void exit(){
+    public void reportsMenu() {
+        try {
+            System.out.println("~LEDGER REPORTS~");
+            System.out.println("Which report would you like to view? Please enter command corresponding to your desired type of report:\n\n" +
+                    "1) Month to Date\n" +
+                    "2) Previous Month\n" +
+                    "3) Year to Date\n" +
+                    "4) Previous Year\n" +
+                    "5) By Vendor\n" +
+                    "0) Go Back to reports page\n" +
+                    "H) Go to Home Screen\n\n" +
+                    "Enter Command:");
+
+            String menuChoice = scanner.nextLine();
+
+            switch (menuChoice.toUpperCase()) {
+                case "1":
+                    mtdReport();
+                    break;
+                case "2":
+                    viewDeposits();
+                    break;
+                case "3":
+                    viewPayments();
+                    break;
+                case "4":
+                    homeScreen();
+                    break;
+                case "5":
+                    vendorReport();
+                    break;
+                case "H":
+                    homeScreen();
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+
+    public void mtdReport() {
+        try {
+            System.out.println("~MONTH TO DATE REPORT~");
+            System.out.println("\nHere are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                double now = LocalDate.now().getMonthValue();
+                String[] getTransactionMonth = arrTransactions[0].split("-");
+                double transactionMonth = Double.parseDouble(getTransactionMonth[1]) - 1;
+//                for (int i = 0; i < transactionMonth; i++ ) {
+                    if (transactionMonth == now) {
+                        System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                    } else {
+                        System.out.println("You have no transactions for the current month");
+                    }
+                }
+            bufReader.close();
+
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+    public void vendorReport() {
+        try {
+            System.out.println("~SEARCH BY VENDOR REPORT~");
+            System.out.println("\nEnter the vendor name of the transactions you would like to view: ");
+
+            String vendorName = scanner.nextLine();
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                String findName = arrTransactions[3];
+                if (vendorName.equalsIgnoreCase(findName)) {
+                    System.out.println("\nTransactions found under " + vendorName + ":\n");
+                    System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } else {
+                    System.out.println("No transactions under " + vendorName + " were found");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+
+    public void exit() {
         System.out.println("Thank you for using our app" +
                 "\nHave a good day!");
 
