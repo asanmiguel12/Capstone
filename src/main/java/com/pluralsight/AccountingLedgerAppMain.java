@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -254,13 +253,13 @@ public class AccountingLedgerAppMain {
                     mtdReport();
                     break;
                 case "2":
-                    viewDeposits();
+                    previousMonthReport();
                     break;
                 case "3":
-                    viewPayments();
+                    yearToDateReport();
                     break;
                 case "4":
-                    homeScreen();
+                    previousYearReport();
                     break;
                 case "5":
                     vendorReport();
@@ -329,7 +328,105 @@ public class AccountingLedgerAppMain {
                     System.out.println(" ") ;
                 }
             }
+            returnHomeprompt();
         } catch (IOException e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+    public void previousMonthReport() {
+        try {
+            System.out.println("~PREVIOUS MONTH REPORT~");
+            System.out.println("\nHere are all of your last month's' transactions as of " + LocalDate.now() + ":\n");
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                double now = LocalDate.now().getMonthValue() - 1;
+                String[] getTransactionMonth = arrTransactions[0].split("-");
+                double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
+//                for (int i = 0; i < transactionMonth; i++ ) {
+                if (transactionMonth == now) {
+                    System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } else {
+                    System.out.println(" ");
+                }
+            }
+            bufReader.close();
+            returnHomeprompt();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+
+    }
+    public void yearToDateReport() {
+        try {
+            System.out.println("~YEAR TO DATE REPORT~");
+            System.out.println("\nHere are all of your current year to date transactions as of " + LocalDate.now() + ":\n");
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                double now = LocalDate.now().getYear();
+                String[] getTransactionMonth = arrTransactions[0].split("-");
+                double transactionYear = Double.parseDouble(getTransactionMonth[0]);
+//                for (int i = 0; i < transactionMonth; i++ ) {
+                if (transactionYear == now) {
+                    System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } else {
+                    System.out.println(" ");
+                }
+            }
+            bufReader.close();
+            returnHomeprompt();
+        } catch (Exception e) {
+            System.out.println("Invalid Input");
+            e.printStackTrace();
+        }
+    }
+    public void previousYearReport() {
+        try {
+            System.out.println("~MONTH TO DATE REPORT~");
+            System.out.println("\nHere are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
+
+            FileReader fileReader = new FileReader("transactions2.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String input = bufReader.readLine();
+            while ((input = bufReader.readLine()) != null) {
+                String[] arrTransactions = input.split("\\|");
+                double deposit = Double.parseDouble(arrTransactions[4]);
+                String description = arrTransactions[2];
+                String vendor = arrTransactions[3];
+                UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+                double now = LocalDate.now().getYear() - 1;
+                String[] getTransactionMonth = arrTransactions[0].split("-");
+                double transactionYear = Double.parseDouble(getTransactionMonth[0]);
+//                for (int i = 0; i < transactionMonth; i++ ) {
+                if (transactionYear == now) {
+                    System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } else {
+                    System.out.println(" ");
+                }
+            }
+            bufReader.close();
+            returnHomeprompt();
+        } catch (Exception e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
         }
@@ -350,7 +447,8 @@ public class AccountingLedgerAppMain {
     }
 
     public void exit() {
-        System.out.println("Thank you for using our app" +
+        System.out.println("User Entry Logged Out At: " + LocalDateTime.now());
+        System.out.println("\nThank you for using our app" +
                 "\nHave a good day!");
 
     }
