@@ -78,6 +78,8 @@ public class AccountingLedgerAppMain {
 
     public void viewLedger() {
         try {
+            System.out.println("Loading your information");
+            Thread.sleep(2000);
             System.out.println("\n~CURRENT UP TO DATE LEDGER~");
             System.out.println("Here is your current account ledger as of: " + LocalDate.now() + "\n");
             FileInputStream transactions = new FileInputStream("transactions2.csv");
@@ -95,7 +97,7 @@ public class AccountingLedgerAppMain {
             scanner.close();
             returnHomeprompt();
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Invalid Input");
             throw new RuntimeException(e);
         }
@@ -111,7 +113,7 @@ public class AccountingLedgerAppMain {
         String formattedDateTime = now.format(formatter);
 
 
-        System.out.println("\n\n\n\n\nHello " + name + "\nUser Entry Logged At: " + formattedDateTime +"\n\n\n\n\n");
+        System.out.println("\n\n\n\n\nWelcome " + name + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n\n\n");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -139,13 +141,15 @@ public class AccountingLedgerAppMain {
 
             UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, deposit);
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + deposit;
-            System.out.println("Your deposit of " + deposit + " for item " + description + "by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
+            System.out.println("Processing information...");
+            Thread.sleep(2000);
+            System.out.println("\n\nYour deposit of " + deposit + " for item " + description + "by " + vendor + " has been successfuly added to your account ledger on: " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
             returnHomeprompt();
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
         }
@@ -170,13 +174,15 @@ public class AccountingLedgerAppMain {
 
             UserLedgers paymentLedger = new UserLedgers(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now()), description, vendor, payment);
             String adjustedLedger = "\n" + paymentLedger.getDate() + "|" + paymentLedger.getTime() + "|" + description + "|" + vendor + "|" + payment;
-            System.out.println("Your payment of " + payment + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on " + paymentLedger.getDate() + " " + paymentLedger.getTime());
+            System.out.println("Processing information...");
+            Thread.sleep(2000);
+            System.out.println("\n\nYour payment of " + payment + " for item " + description + " by " + vendor + " has been successfuly added to your account ledger on: " + paymentLedger.getDate() + " " + paymentLedger.getTime());
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
             returnHomeprompt();
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
         }
@@ -184,6 +190,8 @@ public class AccountingLedgerAppMain {
 
     public void viewDeposits() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~DEPOSIT REPORTS~");
             System.out.println("Here are all of your current deposit transactions as of " + LocalDate.now() + "\n");
 
@@ -210,6 +218,8 @@ public class AccountingLedgerAppMain {
     }
     public void viewPayments() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~PAYMENT REPORT");
             System.out.println("Here are all of your current payment transactions as of " + LocalDate.now() + "\n");
 
@@ -247,7 +257,7 @@ public class AccountingLedgerAppMain {
                     "3) Year to Date\n" +
                     "4) Previous Year\n" +
                     "5) By Vendor\n" +
-                    "0) Go Back to reports page\n" +
+                    "0) Go Back to Ledgers page\n" +
                     "H) Go to Home Screen\n\n" +
                     "Enter Command:");
 
@@ -269,6 +279,9 @@ public class AccountingLedgerAppMain {
                 case "5":
                     vendorReport();
                     break;
+                case "0":
+                    ledgerMenu();
+                    break;
                 case "H":
                     homeScreen();
                     break;
@@ -281,6 +294,8 @@ public class AccountingLedgerAppMain {
 
     public void mtdReport() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~MONTH TO DATE REPORT~");
             System.out.println("Here are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
 
@@ -313,6 +328,8 @@ public class AccountingLedgerAppMain {
     }
     public void vendorReport() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~SEARCH BY VENDOR REPORT~");
             System.out.println("Enter the vendor name of the transactions you would like to view: ");
 
@@ -337,10 +354,14 @@ public class AccountingLedgerAppMain {
         } catch (IOException e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
     public void previousMonthReport() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~PREVIOUS MONTH REPORT~");
             System.out.println("Here are all of your last month's' transactions as of " + LocalDate.now() + ":\n");
 
@@ -357,7 +378,7 @@ public class AccountingLedgerAppMain {
                 double now = LocalDate.now().getMonthValue() - 1;
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
-//                for (int i = 0; i < transactionMonth; i++ ) {
+                //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionMonth == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
@@ -374,6 +395,8 @@ public class AccountingLedgerAppMain {
     }
     public void yearToDateReport() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~YEAR TO DATE REPORT~");
             System.out.println("\nHere are all of your current year to date transactions as of " + LocalDate.now() + ":\n");
 
@@ -390,7 +413,7 @@ public class AccountingLedgerAppMain {
                 double now = LocalDate.now().getYear();
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionYear = Double.parseDouble(getTransactionMonth[0]);
-//                for (int i = 0; i < transactionMonth; i++ ) {
+                //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionYear == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
@@ -406,6 +429,8 @@ public class AccountingLedgerAppMain {
     }
     public void previousYearReport() {
         try {
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
             System.out.println("\n~MONTH TO DATE REPORT~");
             System.out.println("Here are all of your current month to date transactions as of " + LocalDate.now() + ":\n");
 
@@ -422,7 +447,7 @@ public class AccountingLedgerAppMain {
                 double now = LocalDate.now().getYear() - 1;
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionYear = Double.parseDouble(getTransactionMonth[0]);
-//                for (int i = 0; i < transactionMonth; i++ ) {
+                  //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionYear == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
@@ -453,8 +478,8 @@ public class AccountingLedgerAppMain {
 
     public void exit() {
         System.out.println("User Entry Logged Out At: " + LocalDateTime.now());
-        System.out.println("\nThank you for using our app" +
-                "\nHave a good day!");
+        System.out.println("\nThank You For Using Our Account Ledger Application!" +
+                "\nHave A Great Day!");
 
     }
 }

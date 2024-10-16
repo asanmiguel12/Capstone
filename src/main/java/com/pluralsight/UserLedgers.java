@@ -16,7 +16,7 @@ public class UserLedgers {
         this.amountChanged = amountChanged;
         this.itemDescription = itemDescription;
         this.vendor = vendor;
-        this.time = LocalTime.parse(String.valueOf(LocalTime.now()));
+        this.time = LocalTime.parse(String.valueOf(time));
         this.date = LocalDate.parse(String.valueOf(date));
     }
 
