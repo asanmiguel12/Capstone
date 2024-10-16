@@ -32,7 +32,6 @@ public class UserLedgers {
         return formattedTime;
     }
 
-
     public String getVendor() {
         return vendor;
     }
@@ -61,13 +60,9 @@ public class UserLedgers {
         System.out.println("");
         return;
 
-
-
     }
     public void deposit() {
         System.out.println("What is your");
-
-
 
     }
 }
