@@ -94,6 +94,7 @@ public class AccountingLedgerAppMain {
                 }
             }
             scanner.close();
+            returnHomeprompt();
 
         } catch (IOException e) {
             System.out.println("Invalid Input");
@@ -138,6 +139,7 @@ public class AccountingLedgerAppMain {
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
+            returnHomeprompt();
 
         } catch (IOException e) {
             System.out.println("Invalid Input");
@@ -168,6 +170,7 @@ public class AccountingLedgerAppMain {
             bufferedWriter.write(adjustedLedger);
 
             bufferedWriter.close();
+            returnHomeprompt();
 
         } catch (IOException e) {
             System.out.println("Invalid Input");
@@ -195,7 +198,7 @@ public class AccountingLedgerAppMain {
                     System.out.println(f.getDate() + "|" + f.getTime() + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 }
             }
-
+            returnHomeprompt();
         } catch (Exception e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
@@ -219,8 +222,12 @@ public class AccountingLedgerAppMain {
                 UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double. parseDouble(arrTransactions[4]));
                 if (f.getAmountChanged() < 0) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } else {
+                    System.out.println(" ");
                 }
+                System.out.println("You have no transactions for the current month");
             }
+            returnHomeprompt();
 
         } catch (Exception e) {
             System.out.println("Invalid Input");
@@ -285,16 +292,16 @@ public class AccountingLedgerAppMain {
                 UserLedgers f = new UserLedgers(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
                 double now = LocalDate.now().getMonthValue();
                 String[] getTransactionMonth = arrTransactions[0].split("-");
-                double transactionMonth = Double.parseDouble(getTransactionMonth[1]) - 1;
+                double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
 //                for (int i = 0; i < transactionMonth; i++ ) {
                     if (transactionMonth == now) {
                         System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                     } else {
-                        System.out.println("You have no transactions for the current month");
+                        System.out.println(" ");
                     }
                 }
             bufReader.close();
-
+            returnHomeprompt();
         } catch (Exception e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
@@ -319,12 +326,26 @@ public class AccountingLedgerAppMain {
                     System.out.println("\nTransactions found under " + vendorName + ":\n");
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
-                    System.out.println("No transactions under " + vendorName + " were found");
+                    System.out.println(" ") ;
                 }
             }
         } catch (IOException e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
+        }
+    }
+    public void returnHomeprompt() {
+        System.out.println("\nWould you like to do something else with your ledger today?\n" +
+                "Y) Yes\n" +
+                "N) No\n\n" +
+                "Enter Command: ");
+
+        String menuChoice = scanner.nextLine();
+
+        if (menuChoice.equalsIgnoreCase("Y")) {
+            homeScreen();
+        } else {
+            exit();
         }
     }
 
