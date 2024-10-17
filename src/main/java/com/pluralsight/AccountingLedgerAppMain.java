@@ -505,15 +505,13 @@ public class AccountingLedgerAppMain {
 
         while ((input = bufReader.readLine()) != null) {
             String[] arrTransactions = input.split("\\|");
-            double date = Double.parseDouble(arrTransactions[0]);
+            LocalDate ledgerDate = LocalDate.parse(arrTransactions[0]);
             double amount = Double.parseDouble(arrTransactions[4]);
             String description = arrTransactions[2];
             String[] descriptionSplit = description.split(" ");
             String[] timePeriod = menuChoice.split("-");
-            double startDate = Double.parseDouble(timePeriod[0]);
-            double endDate = Double.parseDouble(timePeriod[1]);
-            double choiceTimeDifference = endDate - startDate;
-            double timeDifference = endDate - date;
+            LocalDate startDate = LocalDate.parse(timePeriod[0]);
+            LocalDate endDate = LocalDate.parse(timePeriod[1]);
             ArrayList<String> descriptionArr = new ArrayList<>();
 //            for (int i = 0; i < descriptionSplit.length; i++ ) {
 //                System.out.println(i);
@@ -530,7 +528,7 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(String.valueOf(amount))) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-            } if (choiceTimeDifference > timeDifference ) {
+            } if (ledgerDate.isAfter(startDate)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
             }
