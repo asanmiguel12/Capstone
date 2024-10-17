@@ -271,7 +271,7 @@ public class AccountingLedgerAppMain {
                     "4) Previous Year\n" +
                     "5) By Vendor\n" +
                     "6) Custom Search\n" +
-                    "0) Go Back to Ledgers page\n" +
+                    "0) Go Back to Ledgers Menu\n" +
                     "H) Go to Home Screen\n\n" +
                     "Enter Command:");
 
@@ -309,6 +309,7 @@ public class AccountingLedgerAppMain {
         } catch (Exception e) {
             System.out.println("Invalid Input");
             e.printStackTrace();
+            returnHomeprompt();
         }
     }
 
@@ -335,8 +336,11 @@ public class AccountingLedgerAppMain {
                 //for (int i = 0; i < transactionMonth; i++ ) {
                     if (transactionMonth == now) {
                         System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                    }
+                    } if (transactionMonth != now) {
+                    System.out.println("You have no transactions for the current month");
+                    break;
                 }
+            }
             bufReader.close();
             returnHomeprompt();
         } catch (Exception e) {
@@ -365,8 +369,10 @@ public class AccountingLedgerAppMain {
                 if (vendorName.equalsIgnoreCase(findName)) {
                     System.out.println("\nTransactions found under " + vendorName + ":\n");
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } if (vendorName != findName) {
+                    System.out.println("You have no transactions under '" + vendorName + "'");
+                    break;
                 }
-
             }
             returnHomeprompt();
         } catch (IOException e) {
@@ -377,7 +383,7 @@ public class AccountingLedgerAppMain {
         }
     }
 
-    public void previousMonthReport() {
+    public void previousMonthReport() throws InterruptedException {
         try {
             System.out.println("Loading your information...");
             Thread.sleep(2000);
@@ -397,9 +403,13 @@ public class AccountingLedgerAppMain {
                 double now = LocalDate.now().getMonthValue() - 1;
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
+                boolean c = false;
                 //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionMonth == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } if (transactionMonth != now) {
+                    System.out.println("You have no transactions for the previous month");
+                    break;
                 }
             }
             bufReader.close();
@@ -415,7 +425,7 @@ public class AccountingLedgerAppMain {
             System.out.println("Loading your information...");
             Thread.sleep(2000);
             System.out.println("\n~YEAR TO DATE REPORT~");
-            System.out.println("\nHere are all of your current year to date transactions as of " + LocalDate.now() + ":\n");
+            System.out.println("Here are all of your current year to date transactions as of " + LocalDate.now() + ":\n");
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -433,6 +443,9 @@ public class AccountingLedgerAppMain {
                 //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionYear == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                } if (transactionYear != now) {
+                    System.out.println("You have no transactions for the current year");
+                    break;
                 }
             }
             bufReader.close();
@@ -467,7 +480,8 @@ public class AccountingLedgerAppMain {
                 if (transactionYear == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
                 } else {
-                    System.out.println(" ");
+                    System.out.println("You have no transaction for the previous year");
+                    break;
                 }
             }
             bufReader.close();
@@ -498,8 +512,8 @@ public class AccountingLedgerAppMain {
             String[] timePeriod = menuChoice.split("-");
             double startDate = Double.parseDouble(timePeriod[0]);
             double endDate = Double.parseDouble(timePeriod[1]);
-            double timeDifference = endDate - startDate;
-            double choiceTimeDifference = endDate - date;
+            double choiceTimeDifference = endDate - startDate;
+            double timeDifference = endDate - date;
             ArrayList<String> descriptionArr = new ArrayList<>();
 //            for (int i = 0; i < descriptionSplit.length; i++ ) {
 //                System.out.println(i);
@@ -516,7 +530,7 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(String.valueOf(amount))) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-            } if (choiceTimeDifference < timeDifference ) {
+            } if (choiceTimeDifference > timeDifference ) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
             }
