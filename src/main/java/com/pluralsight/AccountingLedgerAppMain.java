@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -120,7 +121,7 @@ public class AccountingLedgerAppMain {
         String formattedDateTime = now.format(formatter);
 
 
-        System.out.println("\n\n\nWelcome " + name + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n");
+        System.out.println("\n\n\nWELCOME " + name.toUpperCase() + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n");
         System.out.println("Loading your information...");
         try {
             Thread.sleep(2000);
@@ -269,6 +270,7 @@ public class AccountingLedgerAppMain {
                     "3) Year to Date\n" +
                     "4) Previous Year\n" +
                     "5) By Vendor\n" +
+                    "6) Custom Search\n" +
                     "0) Go Back to Ledgers page\n" +
                     "H) Go to Home Screen\n\n" +
                     "Enter Command:");
@@ -290,6 +292,9 @@ public class AccountingLedgerAppMain {
                     break;
                 case "5":
                     vendorReport();
+                    break;
+                case "6":
+                    customSearch();
                     break;
                 case "0":
                     ledgerMenu();
@@ -475,10 +480,9 @@ public class AccountingLedgerAppMain {
 
     public void customSearch() {
     try {
-        System.out.println("Loading your information...");
-        Thread.sleep(2000);
+        Thread.sleep(500);
         System.out.println("\n~CUSTOM SEARCH~");
-        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period for your search: ");
+        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period (start & end date) for your search: ");
 
         String menuChoice = scanner.nextLine();
         FileReader fileReader = new FileReader("transactions2.csv");
@@ -488,24 +492,35 @@ public class AccountingLedgerAppMain {
         while ((input = bufReader.readLine()) != null) {
             String[] arrTransactions = input.split("\\|");
             String date = arrTransactions[0];
-            double deposit = Double.parseDouble(arrTransactions[4]);
+            double amount = Double.parseDouble(arrTransactions[4]);
             String description = arrTransactions[2];
+            String[] descriptionSplit = description.split(" ");
+            ArrayList<String> descriptionArr = new ArrayList<>();
+//            for (int i = 0; i < descriptionSplit.length; i++ ) {
+//                System.out.println(i);
+//            }
             String vendor = arrTransactions[3];
             UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
 
             if (menuChoice.equalsIgnoreCase(vendor)) {
-                System.out.println("\nTransactions found under " + vendor + ":\n");
+                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-            } if ()
-
-            //for (int i = 0; i < transactionMonth; i++ ) {
+            } if (menuChoice.equalsIgnoreCase(String.valueOf(descriptionSplit[0].equalsIgnoreCase(String.valueOf(descriptionSplit[1]))))) {
+                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
+                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            } if (menuChoice.equals(String.valueOf(amount))) {
+                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
+                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            }
 
         }
     } catch (InterruptedException e) {
         throw new RuntimeException(e);
     } catch (IOException e) {
+        System.out.println("Invalid Input");
         throw new RuntimeException(e);
     }
+    returnHomeprompt();
 }
 
     public void returnHomeprompt() {
