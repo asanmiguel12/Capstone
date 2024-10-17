@@ -48,10 +48,11 @@ public class AccountingLedgerAppMain {
         }
     }
 
-    public void ledgerMenu(){
+    public void ledgerMenu() throws InterruptedException {
+        Thread.sleep(1000);
         getUser();
-        System.out.println("~LEDGER OPTIONS~");
-        System.out.println("What would you like to do with your ledger today? Please enter command for desired option: \n\n" +
+        System.out.println("\n~LEDGER OPTIONS~");
+        System.out.println("What would you like to do with your ledger today? Please enter command for desired option:\n\n" +
                 "A) All - Display all entries\n" +
                 "D) Deposits - Display all deposits\n" +
                 "P) Payments - Display all payments\n" +
@@ -84,9 +85,9 @@ public class AccountingLedgerAppMain {
 
     public void viewLedger() {
         try {
-            System.out.println("Loading your information");
+            System.out.println("Loading your information...");
             Thread.sleep(2000);
-            System.out.println("\n~CURRENT UP TO DATE LEDGER~");
+            System.out.println("\n~CURRENT UP-TO-DATE LEDGER~");
             System.out.println("Here is your current account ledger as of: " + LocalDate.now() + "\n");
             FileInputStream transactions = new FileInputStream("transactions2.csv");
             Scanner scanner = new Scanner(transactions);
@@ -119,7 +120,8 @@ public class AccountingLedgerAppMain {
         String formattedDateTime = now.format(formatter);
 
 
-        System.out.println("\n\n\n\n\nWelcome " + name + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n\n\n");
+        System.out.println("\n\n\nWelcome " + name + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n");
+        System.out.println("Loading your information...");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -160,6 +162,7 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void makePayment() {
         try {
             getUser();
@@ -222,6 +225,7 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void viewPayments() {
         try {
             System.out.println("Loading your information...");
@@ -254,8 +258,10 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void reportsMenu() {
         try {
+            Thread.sleep(500);
             System.out.println("\n~LEDGER REPORTS~");
             System.out.println("Which report would you like to view? Please enter command corresponding to your desired type of report:\n\n" +
                     "1) Month to Date\n" +
@@ -321,11 +327,9 @@ public class AccountingLedgerAppMain {
                 double now = LocalDate.now().getMonthValue();
                 String[] getTransactionMonth = arrTransactions[0].split("-");
                 double transactionMonth = Double.parseDouble(getTransactionMonth[1]);
-//                for (int i = 0; i < transactionMonth; i++ ) {
+                //for (int i = 0; i < transactionMonth; i++ ) {
                     if (transactionMonth == now) {
                         System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                    } else {
-                        System.out.println(" ");
                     }
                 }
             bufReader.close();
@@ -335,14 +339,15 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void vendorReport() {
         try {
-            System.out.println("Loading your information...");
-            Thread.sleep(2000);
             System.out.println("\n~SEARCH BY VENDOR REPORT~");
             System.out.println("Enter the vendor name of the transactions you would like to view: ");
 
             String vendorName = scanner.nextLine();
+            System.out.println("Loading your information...");
+            Thread.sleep(2000);
 
             FileReader fileReader = new FileReader("transactions2.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -355,9 +360,8 @@ public class AccountingLedgerAppMain {
                 if (vendorName.equalsIgnoreCase(findName)) {
                     System.out.println("\nTransactions found under " + vendorName + ":\n");
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                } else {
-                    System.out.println(" ") ;
                 }
+
             }
             returnHomeprompt();
         } catch (IOException e) {
@@ -367,6 +371,7 @@ public class AccountingLedgerAppMain {
             throw new RuntimeException(e);
         }
     }
+
     public void previousMonthReport() {
         try {
             System.out.println("Loading your information...");
@@ -390,8 +395,6 @@ public class AccountingLedgerAppMain {
                 //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionMonth == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                } else {
-                    System.out.println(" ");
                 }
             }
             bufReader.close();
@@ -400,8 +403,8 @@ public class AccountingLedgerAppMain {
             System.out.println("Invalid Input");
             e.printStackTrace();
         }
-
     }
+
     public void yearToDateReport() {
         try {
             System.out.println("Loading your information...");
@@ -425,8 +428,6 @@ public class AccountingLedgerAppMain {
                 //for (int i = 0; i < transactionMonth; i++ ) {
                 if (transactionYear == now) {
                     System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                } else {
-                    System.out.println(" ");
                 }
             }
             bufReader.close();
@@ -436,6 +437,7 @@ public class AccountingLedgerAppMain {
             e.printStackTrace();
         }
     }
+
     public void previousYearReport() {
         try {
             System.out.println("Loading your information...");
@@ -471,6 +473,41 @@ public class AccountingLedgerAppMain {
         }
     }
 
+    public void customSearch() {
+    try {
+        System.out.println("Loading your information...");
+        Thread.sleep(2000);
+        System.out.println("\n~CUSTOM SEARCH~");
+        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period for your search: ");
+
+        String menuChoice = scanner.nextLine();
+        FileReader fileReader = new FileReader("transactions2.csv");
+        BufferedReader bufReader = new BufferedReader(fileReader);
+        String input = bufReader.readLine();
+
+        while ((input = bufReader.readLine()) != null) {
+            String[] arrTransactions = input.split("\\|");
+            String date = arrTransactions[0];
+            double deposit = Double.parseDouble(arrTransactions[4]);
+            String description = arrTransactions[2];
+            String vendor = arrTransactions[3];
+            UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+
+            if (menuChoice.equalsIgnoreCase(vendor)) {
+                System.out.println("\nTransactions found under " + vendor + ":\n");
+                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            } if ()
+
+            //for (int i = 0; i < transactionMonth; i++ ) {
+
+        }
+    } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
+
     public void returnHomeprompt() {
         System.out.println("\nWould you like to do something else with your ledger today?\n" +
                 "Y) Yes\n" +
@@ -490,7 +527,5 @@ public class AccountingLedgerAppMain {
         System.out.println("User Entry Logged Out At: " + LocalDateTime.now());
         System.out.println("\nThank You For Using Our Account Ledger Application!" +
                 "\nHave A Nice Day!");
-
     }
 }
-
