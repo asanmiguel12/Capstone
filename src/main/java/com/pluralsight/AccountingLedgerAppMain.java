@@ -482,7 +482,7 @@ public class AccountingLedgerAppMain {
     try {
         Thread.sleep(500);
         System.out.println("\n~CUSTOM SEARCH~");
-        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period (start & end date) for your search: ");
+        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period (i.e 2024/10/01-2024/10/31) for your search: ");
 
         String menuChoice = scanner.nextLine();
         FileReader fileReader = new FileReader("transactions2.csv");
@@ -491,10 +491,15 @@ public class AccountingLedgerAppMain {
 
         while ((input = bufReader.readLine()) != null) {
             String[] arrTransactions = input.split("\\|");
-            String date = arrTransactions[0];
+            double date = Double.parseDouble(arrTransactions[0]);
             double amount = Double.parseDouble(arrTransactions[4]);
             String description = arrTransactions[2];
             String[] descriptionSplit = description.split(" ");
+            String[] timePeriod = menuChoice.split("-");
+            double startDate = Double.parseDouble(timePeriod[0]);
+            double endDate = Double.parseDouble(timePeriod[1]);
+            double timeDifference = endDate - startDate;
+            double choiceTimeDifference = endDate - date;
             ArrayList<String> descriptionArr = new ArrayList<>();
 //            for (int i = 0; i < descriptionSplit.length; i++ ) {
 //                System.out.println(i);
@@ -511,8 +516,10 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(String.valueOf(amount))) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            } if (choiceTimeDifference < timeDifference ) {
+                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
+                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
             }
-
         }
     } catch (InterruptedException e) {
         throw new RuntimeException(e);
