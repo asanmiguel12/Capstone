@@ -538,7 +538,7 @@ public class AccountingLedgerAppMain {
     } catch (InterruptedException e) {
         throw new RuntimeException(e);
     } catch (IOException e) {
-        System.out.println("Invalid Input");
+        System.out.println("Error retrieving data");
         throw new RuntimeException(e);
     }
     returnHomeprompt();
