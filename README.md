@@ -38,9 +38,9 @@ Similar functions utilized for both deposits and payments tailored to their resp
 
 ### Custom Search 
 ![CustomSearch](Images%20/CustomSearch.png) ![CustomSearchOutput](Images%20/CustomSearchOutput.png)
-IF method used to filter user input 
-Determines type of search according to input 
-Finds transactions that best matches input by utilizing array and split functions nested in while loop 
+#### IF method used to filter user input 
+#### Determines type of search according to input 
+#### Finds transactions that best matches input by utilizing array and split functions nested in while loop 
 
 
 
