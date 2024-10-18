@@ -521,6 +521,7 @@ public class AccountingLedgerAppMain {
 //            }
             String vendor = arrTransactions[3];
             UserLedger f = new UserLedger(arrTransactions[0], arrTransactions[1], arrTransactions[2], arrTransactions[3], Double.parseDouble(arrTransactions[4]));
+            String date = f.getDate();
 
             if (menuChoice.equalsIgnoreCase(vendor)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");

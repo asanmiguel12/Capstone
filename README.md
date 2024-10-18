@@ -48,5 +48,11 @@
 ##### Determines type of search according to input 
 ##### Finds transactions that best matches input by utilizing array and split functions nested in while loop 
 
+### Notes, Afterthoughts, & Reflection 
+#### Creating more classes to split methods into different files instead of compiling all in one 
+#### Make more methods for repetitive code i.e FileReader and BufferedReader 
+#### Instantiating a new scanner for all methods that include it and closing it in each, for runner memory efficiency
+#### Implementing more types of methods and classes such as ArrayLists, Hashmaps, For Loops 
+
 
 
