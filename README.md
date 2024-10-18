@@ -18,7 +18,7 @@ Sorts a filters transactions according to current year
 Return-Home method implemented to loop user back to home or exit application in case of invalid input
 
 ### Ledger Reports Menu
-![ReportsMenu](Images%20/Screenshot%202024-10-17%20at%206.15.23%E2%80%AFPM.png)
+![ReportsMenu](Images%20/ReportsMenu.png)
 Switch-Case method utilized to receive user-input and output the method of corresponding command
 Try and catch method for user inputs that do not correspond
 Return-Home method implemented to loop user back to home or exit application in case of invalid input
