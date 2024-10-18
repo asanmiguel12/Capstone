@@ -10,7 +10,7 @@
 ##### .toUpperCase ignores invalid inputs in terms of case as long as character is correct
 ##### Loop triggers in case of errors or out of bounds inputs and refreshes ui so user can try again
 
-### User Login
+### User Login (Favorite Feature)
 ![UserLogin](Images%20/UserLogin.png)
 ##### Function to get user's name
 ##### Logs time and date of login
