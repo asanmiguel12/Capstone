@@ -41,6 +41,7 @@ public class AccountingLedgerAppMain {
                     exit();
                     break;
                 default:
+                    Thread.sleep(800);
                     System.out.println("Invalid Input");
                     homeScreen();
             }
