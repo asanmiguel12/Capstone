@@ -1,7 +1,7 @@
 # Capstone Project 
 
 ## Accounting Ledger Application
-#### Creates and organizes a functional ledger that can be updated in real time
+##### Creates and organizes a functional ledger that can be updated in real time
 #### Can filter transaction searches by type, date, and by vendor
 
 ### Month To Date Ledger Report
