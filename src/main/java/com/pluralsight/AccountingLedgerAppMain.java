@@ -535,6 +535,7 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(amount)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+                break;
             }
         }
     } catch (InterruptedException e) {
