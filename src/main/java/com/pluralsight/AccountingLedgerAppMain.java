@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -524,7 +525,10 @@ public class AccountingLedgerAppMain {
             if (menuChoice.equalsIgnoreCase(vendor)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-            } if (menuChoice.equalsIgnoreCase(String.valueOf(descriptionSplit[0].equalsIgnoreCase(String.valueOf(descriptionSplit[1]))))) {
+            } if (menuChoice.equalsIgnoreCase((arrTransactions[2]))) {
+                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
+                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            } if (menuChoice.equalsIgnoreCase(Arrays.toString(descriptionSplit))) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
             } if (menuChoice.equals(String.valueOf(amount))) {
@@ -536,7 +540,6 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(amount)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-                break;
             }
         }
     } catch (InterruptedException e) {
