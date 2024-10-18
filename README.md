@@ -3,6 +3,7 @@
 ## Accounting Ledger Application
 ##### Creates and organizes a functional ledger that can be updated in real time
 ##### Can filter transaction searches by type, date, and by vendor
+##### All main methods incorporate a try-catch in order to process or loop user back to Home Screen in case of invalid inputs
 
 ### Home Screen
 ![HomeScreen](Images%20/HomeScreen.png)
