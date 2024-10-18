@@ -3,7 +3,7 @@
 ## Accounting Ledger Application
 ##### Creates and organizes a functional ledger that can be updated in real time
 ##### Can filter transaction searches by type, date, and by vendor
-##### All main methods incorporate a try-catch in order to process or loop user back to Home Screen in case of invalid inputs
+##### All main methods incorporate a try-catch in order to process and loop user back to Home Screen in case of invalid inputs
 
 ### Home Screen
 ![HomeScreen](Images%20/HomeScreen.png)
@@ -14,7 +14,7 @@
 ### User Login (Favorite Feature)
 ![UserLogin](Images%20/UserLogin.png)
 ##### Function to get user's name
-##### Logs time and date of login
+##### Displays time and date of login
 ##### Provides a smoother timing for user navigation
 ##### Can be defined further to access specified ledgers according to name
 
