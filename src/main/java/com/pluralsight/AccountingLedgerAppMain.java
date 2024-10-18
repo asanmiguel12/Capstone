@@ -14,6 +14,7 @@ public class AccountingLedgerAppMain {
     static Scanner scanner = new Scanner(System.in);
     public void main () {
         homeScreen();
+        scanner.close();
     }
     public void homeScreen() {
         try {
@@ -52,7 +53,7 @@ public class AccountingLedgerAppMain {
     public void ledgerMenu() throws InterruptedException {
         Thread.sleep(1000);
         getUser();
-        System.out.println("\n~LEDGER OPTIONS~");
+        System.out.println("\n~LEDGER MENU~");
         System.out.println("What would you like to do with your ledger today? Please enter command for desired option:\n\n" +
                 "A) All - Display all entries\n" +
                 "D) Deposits - Display all deposits\n" +
@@ -121,7 +122,7 @@ public class AccountingLedgerAppMain {
         String formattedDateTime = now.format(formatter);
 
 
-        System.out.println("\n\n\nWELCOME " + name.toUpperCase() + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n");
+        System.out.println("\n\nWELCOME " + name.toUpperCase() + "\n\n\n\nUser Entry Logged At: " + formattedDateTime +"\n\n\n");
         System.out.println("Loading your information...");
         try {
             Thread.sleep(2000);
@@ -496,7 +497,7 @@ public class AccountingLedgerAppMain {
     try {
         Thread.sleep(500);
         System.out.println("\n~CUSTOM SEARCH~");
-        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period (i.e 2024/10/01-2024/10/31) for your search: ");
+        System.out.println("Please enter vendor name, amount of deposit or payment, item description, or time period (i.e start date - end date) for your search: ");
 
         String menuChoice = scanner.nextLine();
         FileReader fileReader = new FileReader("transactions2.csv");
@@ -505,13 +506,13 @@ public class AccountingLedgerAppMain {
 
         while ((input = bufReader.readLine()) != null) {
             String[] arrTransactions = input.split("\\|");
-            LocalDate ledgerDate = LocalDate.parse(arrTransactions[0]);
+            //LocalDate ledgerDate = LocalDate.parse(arrTransactions[0]);
             double amount = Double.parseDouble(arrTransactions[4]);
             String description = arrTransactions[2];
             String[] descriptionSplit = description.split(" ");
             String[] timePeriod = menuChoice.split("-");
-            LocalDate startDate = LocalDate.parse(timePeriod[0]);
-            LocalDate endDate = LocalDate.parse(timePeriod[1]);
+            //LocalDate startDate = LocalDate.parse(timePeriod[0]);
+            //LocalDate endDate = LocalDate.parse(timePeriod[1]);
             ArrayList<String> descriptionArr = new ArrayList<>();
 //            for (int i = 0; i < descriptionSplit.length; i++ ) {
 //                System.out.println(i);
@@ -528,7 +529,10 @@ public class AccountingLedgerAppMain {
             } if (menuChoice.equals(String.valueOf(amount))) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
-            } if (ledgerDate.isAfter(startDate)) {
+//            } if (ledgerDate.isAfter(startDate)) {
+//                System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
+//                System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
+            } if (menuChoice.equals(amount)) {
                 System.out.println("\nTransactions found under " + "'" + menuChoice + "'" + ":\n");
                 System.out.println(f.date + "|" + f.time + "|" + f.itemDescription + "|" + f.vendor + "|" + f.amountChanged);
             }
