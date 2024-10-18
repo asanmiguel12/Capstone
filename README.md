@@ -28,8 +28,19 @@ Return-Home method implemented to loop user back to home or exit application in 
 Function to get user's name 
 Logs time and date of login
 Provides a smoother timing for user navigation
+Can be defined further to access specified ledgers according to name
 
+### Deposit & Payment 
+![DepositInput](Images%20/DepositInput.png) ![Deposit](Images%20/DepositOutput.png)
+Returns user input via scanner method
+Outputs as formatted new transaction in user ledger 
+Similar functions utilized for both deposits and payments tailored to their respective type of transaction
 
+### Custom Search 
+![CustomSearch](Images%20/CustomSearch.png)
+If method used to filter user input 
+Determines type of search according to input 
+Finds transactions that best matches input by utilizing array and split functions nested in while loop 
 
 
 
